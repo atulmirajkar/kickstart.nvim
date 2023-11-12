@@ -326,7 +326,6 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
 -- [[ Configure Treesitter ]]
@@ -399,10 +398,6 @@ vim.defer_fn(function()
   }
 end, 0)
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -421,15 +416,19 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  nmap('<leader>lr', vim.lsp.buf.rename, '[L]SP [R]ename')
+  nmap('<leader>la', vim.lsp.buf.code_action, '[L]SP [A]ction')
+  nmap('<leader>lq', vim.diagnostic.setloclist, '[L]SP [Q]uickfix')
+  nmap('<leader>ld', require('telescope.builtin').diagnostics, '[L]SP [D]iagnostics')
+
+  nmap('<leader>lD', require('telescope.builtin').lsp_type_definitions, '[L]SP [D]efinition')
+  nmap('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[L]SP [S]ymbols')
+  nmap('<leader>lS', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[L]SP [S]ymbols Workspace')
+  nmap('<leader>lf', vim.lsp.buf.format, '[L]SP [F]ormat')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -452,10 +451,9 @@ end
 -- document existing key chains
 require('which-key').register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+  ['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
 }

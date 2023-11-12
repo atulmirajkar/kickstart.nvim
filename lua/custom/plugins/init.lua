@@ -5,5 +5,4 @@
 return {
 	"tpope/vim-surround",
 	"michaeljsmith/vim-indent-object",
-	"windwp/nvim-autopairs",
 }
