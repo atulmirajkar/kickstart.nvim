@@ -1,4 +1,4 @@
-return {
+local M = {
 	"epwalsh/obsidian.nvim",
 	version = "*", -- recommended, use latest release instead of latest commit
 	lazy = true,
@@ -14,7 +14,10 @@ return {
 		-- Required.
 		"nvim-lua/plenary.nvim",
 	},
-	opts = {
+}
+
+M.config = function()
+	require("obsidian").setup {
 		workspaces = {
 			{
 				name = "personal",
@@ -52,5 +55,6 @@ return {
 		--  * "notes_subdir" - put new notes in the default notes subdirectory.
 		new_notes_location = "current_dir",
 
-	},
-}
+	}
+end
+return M
