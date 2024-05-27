@@ -27,7 +27,7 @@ Spec("kickstart.lspconfig")
 Spec("kickstart.indentline")
 Spec("kickstart.comment")
 Spec("kickstart.autoformat")
-Spec("kickstart.debug")
+-- Spec("kickstart.debug")
 Spec("kickstart.vimsleuth")
 Spec("kickstart.mini")
 -- -- Git related plugins
@@ -77,6 +77,7 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     }
 end
+---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
