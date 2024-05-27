@@ -1,41 +1,65 @@
 local M = {
     'lewis6991/gitsigns.nvim',
-    event = "BufEnter",
 }
 
 M.config = function()
     require("gitsigns").setup {
         signs = {
-            add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-            change = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-            delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-            topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-            changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+            add          = { text = '┃' },
+            change       = { text = '┃' },
+            delete       = { text = '_' },
+            topdelete    = { text = '‾' },
+            changedelete = { text = '~' },
+            untracked    = { text = '┆' },
         },
         on_attach = function(bufnr)
-            vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk,
-                { buffer = bufnr, desc = 'Preview git hunk' })
+            local gitsigns = require 'gitsigns'
+            local function map(mode, l, r, opts)
+                opts = opts or {}
+                opts.buffer = bufnr
+                vim.keymap.set(mode, l, r, opts)
+            end
 
-            -- don't override the built-in and fugitive keymaps
-            local gs = package.loaded.gitsigns
-            vim.keymap.set({ 'n', 'v' }, ']c', function()
+            -- Navigation
+            map('n', ']c', function()
                 if vim.wo.diff then
-                    return ']c'
+                    vim.cmd.normal { ']c', bang = true }
+                else
+                    gitsigns.nav_hunk('next')
                 end
-                vim.schedule(function()
-                    gs.next_hunk()
-                end)
-                return '<Ignore>'
-            end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-            vim.keymap.set({ 'n', 'v' }, '[c', function()
+            end, { desc = 'Jump to next git [c]hange' })
+
+            map('n', '[c', function()
                 if vim.wo.diff then
-                    return '[c'
+                    vim.cmd.normal { '[c', bang = true }
+                else
+                    gitsigns.nav_hunk('prev')
                 end
-                vim.schedule(function()
-                    gs.prev_hunk()
-                end)
-                return '<Ignore>'
-            end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
+            end, { desc = 'Jump to previous git [c]hange' })
+
+            -- Actions
+            -- visual mode
+            map('v', '<leader>gs', function()
+                gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+            end, { desc = '[g]it [s]tage hunk' })
+            map('v', '<leader>gr', function()
+                gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+            end, { desc = '[g]it reset hunk' })
+            -- normal mode
+            map('n', '<leader>gs', gitsigns.stage_hunk, { desc = '[g]it [s]tage hunk' })
+            map('n', '<leader>gr', gitsigns.reset_hunk, { desc = '[g]it [r]eset hunk' })
+            map('n', '<leader>gS', gitsigns.stage_buffer, { desc = '[g]it [S]tage buffer' })
+            map('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = '[g]it [u]ndo stage hunk' })
+            map('n', '<leader>gR', gitsigns.reset_buffer, { desc = '[g]it [R]eset buffer' })
+            map('n', '<leader>gp', gitsigns.preview_hunk, { desc = '[g]it [p]review hunk' })
+            map('n', '<leader>gb', gitsigns.blame_line, { desc = '[g]it [b]lame line' })
+            map('n', '<leader>gd', gitsigns.diffthis, { desc = '[g]it [d]iff against index' })
+            map('n', '<leader>gD', function()
+                gitsigns.diffthis('~')
+            end, { desc = '[g]it [D]iff against last commit' })
+            -- Toggles
+            map('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git show [b]lame line' })
+            map('n', '<leader>hD', gitsigns.toggle_deleted, { desc = 'Toggle git show [D]eleted' })
         end,
     }
 end

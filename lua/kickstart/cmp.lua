@@ -31,6 +31,8 @@ local M = {
         --  into multiple repos for maintenance purposes.
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-buffer'
     },
 }
 
@@ -103,10 +105,6 @@ M.config = function()
                     luasnip.expand_or_jump()
                 elseif check_backspace() then
                     fallback()
-                    -- require("neotab").tabout()
-                else
-                    fallback()
-                    -- require("neotab").tabout()
                 end
             end, {
                 "i",
@@ -123,28 +121,60 @@ M.config = function()
             end, {
                 "i",
                 "s",
-            }), },
+            }),
+        },
         sources = {
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
-            { name = 'path' }
+            { name = 'path' },
+            { name = 'buffer' }
+        },
+        sorting = {
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
+                cmp.config.compare.recently_used,
+                cmp.config.compare.kind,
+            },
         },
         confirm_opts = {
             behavior = cmp.ConfirmBehavior.Replace,
             select = false,
         },
-        formatting = {
-            fields = { "kind", "abbr", "menu" },
-            window = {
-                completion = {
-                    border = "rounded",
-                    scrollbar = false,
-                },
-                documentation = {
-                    border = "rounded",
-                },
+        window = {
+            completion = {
+                border = "rounded",
+                scrollbar = false,
             },
-        }
+            documentation = {
+                border = "rounded",
+            },
+        },
     }
+
+    -- `/` cmdline setup.
+    cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+            { name = 'buffer' }
+        }
+    })
+    -- `:` cmdline setup.
+    cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources(
+            {
+                { name = 'path' }
+            },
+            {
+                {
+                    name = 'cmdline',
+                    option = {
+                        ignore_cmds = { 'Man', '!' }
+                    }
+                }
+            })
+    })
 end
 return M
