@@ -55,7 +55,7 @@ M.config = function()
             map('n', '<leader>gb', gitsigns.blame_line, { desc = '[g]it [b]lame line' })
             map('n', '<leader>gd', gitsigns.diffthis, { desc = '[g]it [d]iff against index' })
             map('n', '<leader>gD', function()
-                gitsigns.diffthis('~')
+                gitsigns.diffthis('@')
             end, { desc = '[g]it [D]iff against last commit' })
             -- Toggles
             map('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git show [b]lame line' })
@@ -64,4 +64,5 @@ M.config = function()
     }
 end
 
+-- test
 return M
