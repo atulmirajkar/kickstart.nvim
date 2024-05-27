@@ -5,9 +5,7 @@ local M = {
 }
 
 function M.config()
-    -- vim.cmd.colorscheme 'onedark'
-    -- vim.cmd.colorscheme 'catppuccin'
-    vim.cmd.colorscheme 'tokyonight-moon'
+    vim.cmd.colorscheme 'tokyonight-storm'
 end
 
 return M
