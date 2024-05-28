@@ -44,15 +44,11 @@ M.config = function()
     require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup {}
 
-    local check_backspace = function()
-        local col = vim.fn.col "." - 1
-        return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-    end
-
     ---@diagnostic disable-next-line: missing-fields
     cmp.setup {
+        preselect = cmp.PreselectMode.None,
         completion = {
-            completeopt = 'menu,menuone,noinsert',
+            completeopt = 'menu,menuone,noinsert,preview',
         },
         snippet = {
             expand = function(args)
@@ -73,9 +69,11 @@ M.config = function()
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
             },
+            ['<C-y>'] = cmp.mapping.confirm {
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+            },
             ['<C-e'] = cmp.mapping.abort(),
-
-
 
             -- Think of <c-l> as moving to the right of your snippet expansion.
             --  So if you have a snippet that's like:
@@ -96,32 +94,32 @@ M.config = function()
                 end
             end, { 'i', 's' }),
 
-            ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expandable() then
-                    luasnip.expand()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                elseif check_backspace() then
-                    fallback()
-                end
-            end, {
-                "i",
-                "s",
-            }),
-            ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, {
-                "i",
-                "s",
-            }),
+            -- ["<Tab>"] = cmp.mapping(function(fallback)
+            --     if cmp.visible() then
+            --         cmp.select_next_item()
+            --     elseif luasnip.expandable() then
+            --         luasnip.expand()
+            --     elseif luasnip.expand_or_jumpable() then
+            --         luasnip.expand_or_jump()
+            --     elseif check_backspace() then
+            --         fallback()
+            --     end
+            -- end, {
+            --     "i",
+            --     "s",
+            -- }),
+            -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+            --     if cmp.visible() then
+            --         cmp.select_prev_item()
+            --     elseif luasnip.jumpable(-1) then
+            --         luasnip.jump(-1)
+            --     else
+            --         fallback()
+            --     end
+            -- end, {
+            --     "i",
+            --     "s",
+            -- }),
         },
         sources = {
             { name = 'nvim_lsp' },
@@ -129,18 +127,25 @@ M.config = function()
             { name = 'path' },
             { name = 'buffer' }
         },
-        sorting = {
-            comparators = {
-                cmp.config.compare.offset,
-                cmp.config.compare.exact,
-                cmp.config.compare.score,
-                cmp.config.compare.recently_used,
-                cmp.config.compare.kind,
-            },
-        },
+        -- sorting = {
+        --     comparators = {
+        --         cmp.config.compare.offset,
+        --         cmp.config.compare.exact,
+        --         cmp.config.compare.score,
+        --         cmp.config.compare.recently_used,
+        --         cmp.config.compare.kind,
+        --     },
+        -- },
         confirm_opts = {
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
+        },
+        ---@diagnostic disable-next-line: missing-fields
+        formatting = {
+            fields = { "abbr", "kind", "menu" },
+            format = function(entry, vim_item)
+                vim_item.menu = entry.source.name
+                return vim_item
+            end
         },
         window = {
             completion = {
@@ -155,6 +160,10 @@ M.config = function()
 
     -- `/` cmdline setup.
     cmp.setup.cmdline({ '/', '?' }, {
+        preselect = cmp.PreselectMode.None,
+        completion = {
+            completeopt = 'menu,menuone,noinsert,preview',
+        },
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
             { name = 'buffer' }
@@ -162,6 +171,10 @@ M.config = function()
     })
     -- `:` cmdline setup.
     cmp.setup.cmdline(':', {
+        preselect = cmp.PreselectMode.None,
+        completion = {
+            completeopt = 'menu,menuone,noinsert,preview',
+        },
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
             {
