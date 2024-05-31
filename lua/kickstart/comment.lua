@@ -4,9 +4,10 @@ local M = {
         'folke/todo-comments.nvim',
         'nvim-lua/plenary.nvim'
     },
-    opts = {},
+    lazy = false,
 }
 M.config = function()
+    require('Comment').setup{}
     require('todo-comments').setup {
         signs = false
     }

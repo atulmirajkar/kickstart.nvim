@@ -1,9 +1,11 @@
 local M = {
     'lewis6991/gitsigns.nvim',
+    lazy = false
 }
 
 M.config = function()
-    require("gitsigns").setup {
+    local gitsigns = require('gitsigns')
+    gitsigns.setup {
         signs = {
             add          = { text = '┃' },
             change       = { text = '┃' },
@@ -13,7 +15,6 @@ M.config = function()
             untracked    = { text = '┆' },
         },
         on_attach = function(bufnr)
-            local gitsigns = require 'gitsigns'
             local function map(mode, l, r, opts)
                 opts = opts or {}
                 opts.buffer = bufnr
@@ -25,7 +26,7 @@ M.config = function()
                 if vim.wo.diff then
                     vim.cmd.normal { ']c', bang = true }
                 else
-                    gitsigns.nav_hunk('next')
+                    gitsigns.next_hunk()
                 end
             end, { desc = 'Jump to next git [c]hange' })
 
@@ -33,7 +34,7 @@ M.config = function()
                 if vim.wo.diff then
                     vim.cmd.normal { '[c', bang = true }
                 else
-                    gitsigns.nav_hunk('prev')
+                    gitsigns.prev_hunk()
                 end
             end, { desc = 'Jump to previous git [c]hange' })
 
@@ -60,6 +61,10 @@ M.config = function()
             -- Toggles
             map('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git show [b]lame line' })
             map('n', '<leader>hD', gitsigns.toggle_deleted, { desc = 'Toggle git show [D]eleted' })
+
+            -- experimental
+            -- Text object
+            map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end,
     }
 end
