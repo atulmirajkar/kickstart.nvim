@@ -15,6 +15,8 @@ Spec("custom.plugins.obsidian")
 Spec("custom.plugins.toggleterm")
 Spec("custom.plugins.nvimtree")
 Spec("custom.plugins.fugitive")
+Spec("custom.plugins.copilot")
+Spec("custom.plugins.copilot-lualine")
 --kickstart
 Spec("kickstart.devicons")
 Spec("kickstart.colorscheme")
