@@ -17,6 +17,7 @@ Spec("custom.plugins.nvimtree")
 Spec("custom.plugins.fugitive")
 Spec("custom.plugins.copilot")
 Spec("custom.plugins.copilot-lualine")
+Spec("custom.plugins.copilot-chat")
 --kickstart
 Spec("kickstart.devicons")
 Spec("kickstart.colorscheme")

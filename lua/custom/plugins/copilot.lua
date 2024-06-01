@@ -1,6 +1,6 @@
 local M = {
 	"zbirenbaum/copilot.lua",
-	cmd = "Copilot",
+	branch = "canary",
 	event = "InsertEnter",
 	dependencies = {
 		"zbirenbaum/copilot-cmp",
