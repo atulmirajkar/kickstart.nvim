@@ -131,14 +131,17 @@ M.config = function()
 			-- Get current filetype and set it to markdown if the current filetype is copilot-chat
 			local ft = vim.bo.filetype
 			if ft == "copilot-chat" then
+				-- update completion source for copilot-chat
 				print("loaded chat")
 				local cmp = require("cmp")
-				-- local buffer = vim.api.nvim_get_current_buf()
 				cmp.setup.buffer {
 					sources = {
 						{ name = 'copilot-chat' },
+						{ name = 'buffer' }
 					}
 				}
+
+				-- change filetype to markdown
 				vim.bo.filetype = "markdown"
 			end
 		end,

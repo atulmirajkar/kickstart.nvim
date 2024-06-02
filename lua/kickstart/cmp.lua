@@ -137,6 +137,7 @@ M.config = function()
         --         cmp.config.compare.kind,
         --     },
         -- },
+        ---@diagnostic disable-next-line: missing-fields
         sorting = {
             comparators = {
                 require("copilot_cmp.comparators").prioritize,
