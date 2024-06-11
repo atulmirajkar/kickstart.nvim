@@ -83,16 +83,17 @@ M.config = function()
             --
             -- <c-l> will move you to the right of each of the expansion locations.
             -- <c-h> is similar, except moving you backwards.
-            ['<C-l>'] = cmp.mapping(function()
-                if luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                end
-            end, { 'i', 's' }),
-            ['<C-h>'] = cmp.mapping(function()
-                if luasnip.locally_jumpable(-1) then
-                    luasnip.jump(-1)
-                end
-            end, { 'i', 's' }),
+            -- this conficts with moving between buffers / tmux panes
+            -- ['<C-l>'] = cmp.mapping(function()
+            --     if luasnip.expand_or_locally_jumpable() then
+            --         luasnip.expand_or_jump()
+            --     end
+            -- end, { 'i', 's' }),
+            -- ['<C-h>'] = cmp.mapping(function()
+            --     if luasnip.locally_jumpable(-1) then
+            --         luasnip.jump(-1)
+            --     end
+            -- end, { 'i', 's' }),
 
             -- ["<Tab>"] = cmp.mapping(function(fallback)
             --     if cmp.visible() then
@@ -122,7 +123,7 @@ M.config = function()
             -- }),
         },
         sources = {
-            { name = 'copilot' },
+            -- { name = 'copilot' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' },
@@ -140,7 +141,7 @@ M.config = function()
         ---@diagnostic disable-next-line: missing-fields
         sorting = {
             comparators = {
-                require("copilot_cmp.comparators").prioritize,
+                -- require("copilot_cmp.comparators").prioritize,
 
                 -- Below is the default comparitor list and order for nvim-cmp
                 cmp.config.compare.offset,
@@ -175,6 +176,9 @@ M.config = function()
                 border = "rounded",
             },
         },
+        experimental = {
+            ghost_text = true,
+        }
     }
 
     -- `/` cmdline setup.

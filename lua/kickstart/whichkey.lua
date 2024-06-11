@@ -10,7 +10,7 @@ M.config = function()
         ['<leader>h'] = { name = '[H]it', _ = 'which_key_ignore' },
         ['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>a'] = { name = '[A]I', _ = 'which_key_ignore' }
     }
 end
 return M

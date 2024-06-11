@@ -24,6 +24,9 @@ M.config = function()
 				path = "/Users/atulmirajkar/Work/myobsidian"
 			}
 		},
+		follow_url_func = function(url)
+			vim.fn.jobstart({ "xdg-open", url })
+		end,
 		mappings = {
 			-- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
 			["gd"] = {

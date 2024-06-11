@@ -4,7 +4,7 @@ local M = {
   branch = 'canary',
   dependencies = {
     { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
-    { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper}
+    { 'nvim-lua/plenary.nvim' },  -- for curl, log wrapper}
   },
   event = 'VeryLazy',
 }
@@ -46,7 +46,7 @@ M.config = function()
       },
     },
     auto_follow_cursor = true, -- Don't follow the cursor after getting response
-    show_help = false, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
+    show_help = true,          -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
     mappings = {
       -- Use tab for completion
       complete = {

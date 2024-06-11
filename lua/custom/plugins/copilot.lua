@@ -2,9 +2,6 @@ local M = {
 	"zbirenbaum/copilot.lua",
 	branch = "canary",
 	event = "InsertEnter",
-	dependencies = {
-		"zbirenbaum/copilot-cmp",
-	},
 }
 
 M.config = function()
@@ -14,10 +11,22 @@ M.config = function()
 		filetypes = {
 			markdown = true,
 		},
-		suggestion = { enabled = false },
-		panel = { enabled = false },
+		-- suggestion = { enabled = false },
+		-- panel = { enabled = false },
+		suggestion = {
+			enabled = true,
+			auto_trigger = false,
+			debounce = 75,
+			keymap = {
+				accept = "<M-y>",
+				dismiss = "<M-e>",
+				accept_word = false,
+				accept_line = false,
+				next = "<M-]>",
+				prev = "<M-[>",
+			}
+		}
 	})
-	require('copilot_cmp').setup({})
 end
 
 return M
