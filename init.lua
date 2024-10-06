@@ -19,6 +19,7 @@ Spec 'custom.plugins.copilot'
 Spec 'custom.plugins.copilot-lualine'
 Spec 'custom.plugins.copilot-chat'
 Spec 'custom.plugins.tmux-navigator'
+Spec 'custom.plugins.project'
 --kickstart
 Spec 'kickstart.devicons'
 Spec 'kickstart.colorscheme'
