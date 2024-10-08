@@ -35,6 +35,8 @@ M.config = function()
 
             nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
             nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+            nmap('[d', vim.diagnostic.goto_prev, 'Previous diagnostic')
+            nmap(']d', vim.diagnostic.goto_next, 'Next diagnostic')
 
             -- Lesser used LSP functionality
             nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -96,9 +98,27 @@ M.config = function()
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+    local util = require 'lspconfig.util'
     local servers = {
         -- clangd = {},
-        gopls = {},
+        gopls = {
+            root_dir = function(fname)
+                -- see: https://github.com/neovim/nvim-lspconfig/issues/804
+                local mod_cache = vim.trim(vim.fn.system 'go env GOMODCACHE')
+                if fname:sub(1, #mod_cache) == mod_cache then
+                    local clients = vim.lsp.get_active_clients { name = 'gopls' }
+                    if #clients > 0 then
+                        return clients[#clients].config.root_dir
+                    end
+                end
+                return util.root_pattern 'go.work' (fname) or util.root_pattern('go.mod', '.git')(fname)
+            end,
+            settings = {
+                gopls = {
+                    gofumpt = true,
+                },
+            },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
