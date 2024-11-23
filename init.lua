@@ -17,7 +17,7 @@ Spec 'custom.plugins.autopairs'
 Spec 'custom.plugins.markdown-preview'
 Spec 'custom.plugins.obsidian'
 -- Spec 'custom.plugins.toggleterm' - using tmux navigator
--- Spec 'custom.plugins.nvimtree'
+-- Spec 'custom.plugins.nvimtree' - using neotree
 Spec 'custom.plugins.neotree'
 Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.copilot'
