@@ -5,10 +5,14 @@ function Spec(item)
   table.insert(PluginSpec, { import = item })
 end
 
+--  NOTE: do colorscheme first so that overrides to highlights work later
+Spec 'kickstart.colorscheme'
+
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 require 'custom.core.options'
 require 'custom.core.keymaps'
 require 'custom.core.autocmds'
+
 Spec 'custom.plugins.autopairs'
 Spec 'custom.plugins.markdown-preview'
 Spec 'custom.plugins.obsidian'
@@ -22,7 +26,6 @@ Spec 'custom.plugins.tmux-navigator'
 Spec 'custom.plugins.project'
 --kickstart
 Spec 'kickstart.devicons'
-Spec 'kickstart.colorscheme'
 Spec 'kickstart.cmp'
 Spec 'kickstart.lualine'
 Spec 'kickstart.whichkey'

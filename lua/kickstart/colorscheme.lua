@@ -1,11 +1,13 @@
 local M = {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
+  'rebelot/kanagawa.nvim',
+  -- 'navarasu/onedark.nvim',
+  lazy = false,
+  priority = 1000,
 }
 
 function M.config()
-    vim.cmd.colorscheme 'tokyonight-storm'
+  -- vim.cmd.colorscheme 'onedark'
+  vim.cmd.colorscheme 'kanagawa'
 end
 
 return M
