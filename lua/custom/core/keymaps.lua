@@ -4,43 +4,43 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+keymap('', '<Space>', '<Nop>', opts)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- primeagen tricks
 -- page down and set line to middle of screen
-keymap("n", "<C-d>", "<C-d>zz", opts)
-keymap("n", "<C-u>", "<C-u>zz", opts)
+keymap('n', '<C-d>', '<C-d>zz', opts)
+keymap('n', '<C-u>', '<C-u>zz', opts)
 
 -- search and set line to middle of screen, zv to unfold if folded
-keymap("n", "n", "nzzzv", opts)
-keymap("n", "N", "Nzzzv", opts)
-keymap("n", "N", "Nzzzv", opts)
-keymap("n", "*", "*zz", opts)
-keymap("n", "#", "#zz", opts)
-keymap("n", "g*", "g*zz", opts)
-keymap("n", "g#", "g#zz", opts)
+keymap('n', 'n', 'nzzzv', opts)
+keymap('n', 'N', 'Nzzzv', opts)
+keymap('n', 'N', 'Nzzzv', opts)
+keymap('n', '*', '*zz', opts)
+keymap('n', '#', '#zz', opts)
+keymap('n', 'g*', 'g*zz', opts)
+keymap('n', 'g#', 'g#zz', opts)
 
 -- " \"_ is the black hole register, "_d deletes to the blackhole register, \ is
 -- " added to escape
-keymap("n", "<leader>d", '"_d', opts)
-keymap("x", "<leader>d", '"_d', opts)
-keymap("x", "<leader>p", '"_dp', opts)
+keymap('n', '<leader>d', '"_d', opts)
+keymap('x', '<leader>d', '"_d', opts)
+keymap('x', '<leader>p', '"_dp', opts)
 
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap('n', '<C-h>', '<C-w>h', opts)
+keymap('n', '<C-j>', '<C-w>j', opts)
+keymap('n', '<C-k>', '<C-w>k', opts)
+keymap('n', '<C-l>', '<C-w>l', opts)
 -- open last buffer
-keymap("n", "<C-6>", "<C-^>", opts)
+keymap('n', '<C-6>', '<C-^>', opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap('n', '<C-Up>', ':resize -2<CR>', opts)
+keymap('n', '<C-Down>', ':resize +2<CR>', opts)
+keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
+keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
 -- Navigate buffers - accidentally moving buffers if in normal mode
 -- keymap("n", "<S-l>", ":bnext<CR>", opts)
@@ -48,18 +48,36 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap('v', '<', '<gv', opts)
+keymap('v', '>', '>gv', opts)
 
 -- paste without copying the text that is selected
-keymap("v", "p", '"_dP', opts)
+keymap('v', 'p', '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+keymap('x', 'J', ":move '>+1<CR>gv-gv", opts)
+keymap('x', 'K', ":move '<-2<CR>gv-gv", opts)
 
 -- from kickstart
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- buffer keymaps
+-- function to delete all buffers except the current one
+local function deleteAllBuf()
+  local bufs = vim.api.nvim_list_bufs()
+  local currentBuf = vim.api.nvim_get_current_buf()
+  for _, i in ipairs(bufs) do
+    print(i)
+    if i ~= currentBuf then
+      vim.api.nvim_buf_delete(i, {})
+    end
+  end
+end
+--
+vim.keymap.set('n', '<leader>bd', deleteAllBuf, opts)
+vim.keymap.set('n', '<leader>bc', ':close<CR>', opts)
+vim.keymap.set('n', '<leader>bv', ':vsplit<CR>', opts)
+keymap('n', '<leader>bm', ':only<CR>', opts)

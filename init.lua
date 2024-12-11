@@ -19,12 +19,14 @@ Spec 'custom.plugins.obsidian'
 -- Spec 'custom.plugins.toggleterm' - using tmux navigator
 -- Spec 'custom.plugins.nvimtree' - using neotree
 Spec 'custom.plugins.neotree'
-Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.copilot'
 Spec 'custom.plugins.copilot-lualine'
 Spec 'custom.plugins.copilot-chat'
 Spec 'custom.plugins.tmux-navigator'
 Spec 'custom.plugins.project'
+
+-- -- Git related plugins
+Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.lazygit'
 
 --kickstart
@@ -42,7 +44,6 @@ Spec 'kickstart.autoformat'
 -- Spec("kickstart.debug") -- getting some error with dap
 Spec 'kickstart.vimsleuth'
 Spec 'kickstart.mini'
--- -- Git related plugins
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
