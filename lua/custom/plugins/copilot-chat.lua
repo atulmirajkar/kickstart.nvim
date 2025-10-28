@@ -4,7 +4,7 @@ local M = {
   branch = 'canary',
   dependencies = {
     { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
-    { 'nvim-lua/plenary.nvim' },  -- for curl, log wrapper}
+    { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper}
   },
   event = 'VeryLazy',
 }
@@ -46,7 +46,7 @@ M.config = function()
       },
     },
     auto_follow_cursor = true, -- Don't follow the cursor after getting response
-    show_help = true,          -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
+    show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
     mappings = {
       -- Use tab for completion
       complete = {
@@ -173,13 +173,24 @@ M.config = function()
   )
   -- Code related commands
   nmap('<leader>ae', '<cmd>CopilotChatExplain<cr>', 'CopilotChat - Explain code')
+  xmap('<leader>ae', '<cmd>CopilotChatExplain<cr>', 'CopilotChat - Explain code')
+
   nmap('<leader>at', '<cmd>CopilotChatTests<cr>', 'CopilotChat - Generate tests')
+  xmap('<leader>at', '<cmd>CopilotChatTests<cr>', 'CopilotChat - Generate tests')
+
   nmap('<leader>ar', '<cmd>CopilotChatReview<cr>', 'CopilotChat - Review code')
+  xmap('<leader>ar', '<cmd>CopilotChatReview<cr>', 'CopilotChat - Review code')
+
   nmap('<leader>aR', '<cmd>CopilotChatRefactor<cr>', 'CopilotChat - Refactor code')
+  xmap('<leader>aR', '<cmd>CopilotChatRefactor<cr>', 'CopilotChat - Refactor code')
+
   nmap('<leader>an', '<cmd>CopilotChatBetterNamings<cr>', 'CopilotChat - Better Naming')
+  xmap('<leader>an', '<cmd>CopilotChatBetterNamings<cr>', 'CopilotChat - Better Naming')
+
   -- Chat with Copilot in visual mode
   xmap('<leader>av', ':CopilotChatVisual', 'CopilotChat - Open in vertical split')
   xmap('<leader>ax', ':CopilotChatInline<cr>', 'CopilotChat - Inline chat')
+  --
   -- Custom input for CopilotChat
   nmap('<leader>ai', function()
     local input = vim.fn.input 'Ask Copilot: '
@@ -187,6 +198,7 @@ M.config = function()
       vim.cmd('CopilotChat ' .. input)
     end
   end, 'CopilotChat - Ask input')
+  --
   -- Generate commit message based on the git diff
   nmap('<leader>am', '<cmd>CopilotChatCommit<cr>', 'CopilotChat - Generate commit message for all changes')
   nmap('<leader>aM', '<cmd>CopilotChatCommitStaged<cr>', 'CopilotChat - Generate commit message for staged changes')
