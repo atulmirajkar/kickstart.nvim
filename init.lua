@@ -5,27 +5,29 @@ function Spec(item)
   table.insert(PluginSpec, { import = item })
 end
 
+--  NOTE: run this before any of the highlighting below
+Spec 'kickstart.colorscheme'
+
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 require 'custom.core.options'
 require 'custom.core.keymaps'
 require 'custom.core.autocmds'
+
 Spec 'custom.plugins.autopairs'
 Spec 'custom.plugins.markdown-preview'
 Spec 'custom.plugins.obsidian'
--- Spec 'custom.plugins.toggleterm' - using tmux navigator
--- Spec 'custom.plugins.nvimtree' - using neotree
 Spec 'custom.plugins.neotree'
-Spec 'custom.plugins.fugitive'
-Spec 'custom.plugins.copilot'
-Spec 'custom.plugins.copilot-lualine'
-Spec 'custom.plugins.copilot-chat'
+-- Spec 'custom.plugins.copilot'
+-- Spec 'custom.plugins.copilot-lualine'
+-- Spec 'custom.plugins.copilot-chat'
 Spec 'custom.plugins.tmux-navigator'
 Spec 'custom.plugins.project'
+-- -- Git related plugins
+Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.lazygit'
 
 --kickstart
 Spec 'kickstart.devicons'
-Spec 'kickstart.colorscheme'
 Spec 'kickstart.cmp'
 Spec 'kickstart.lualine'
 Spec 'kickstart.whichkey'
@@ -39,7 +41,6 @@ Spec 'kickstart.autoformat'
 -- Spec("kickstart.debug") -- getting some error with dap
 Spec 'kickstart.vimsleuth'
 Spec 'kickstart.mini'
--- -- Git related plugins
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
