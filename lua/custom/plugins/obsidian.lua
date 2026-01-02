@@ -58,5 +58,7 @@ M.config = function()
     --  * "notes_subdir" - put new notes in the default notes subdirectory.
     new_notes_location = 'current_dir',
   }
+
+  vim.keymap.set('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = 'Obsidian Backlinks' })
 end
 return M

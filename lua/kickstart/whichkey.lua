@@ -2,16 +2,30 @@ local M = {
   'folke/which-key.nvim',
 }
 M.config = function()
-  -- document existing key chains
-  require('which-key').register {
-    ['<leader>q'] = { '<cmd>confirm q<CR>', '[Q]uit' },
-    ['<leader>hl'] = { '<cmd>nohlsearch<CR>', 'NO[HL]' },
-    ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-    ['<leader>h'] = { name = '[H]it', _ = 'which_key_ignore' },
-    ['<leader>l'] = { name = '[L]SP', _ = 'which_key_ignore' },
-    ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-    ['<leader>a'] = { name = '[A]I', _ = 'which_key_ignore' },
-    ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
+  require('which-key').add {
+    { '<leader>q', '<cmd>confirm q<CR>', desc = '[Q]uit' },
+    { '<leader>hl', '<cmd>nohlsearch<CR>', desc = 'NO{HL]' },
+
+    { '<leader>g', group = '[G]it' },
+    { '<leader>g_', hidden = true },
+
+    { '<leader>h', group = '[H]it' },
+    { '<leader>h_', hidden = true },
+
+    { '<leader>l', group = '[L]SP' },
+    { '<leader>l_', hidden = true },
+
+    { '<leader>s', group = '[S]earch' },
+    { '<leader>s_', hidden = true },
+
+    { '<leader>a', group = '[A]I' },
+    { '<leader>a_', hidden = true },
+
+    { '<leader>b', group = '[B]uffer' },
+    { '<leader>b_', hidden = true },
+
+    { '<leader>o', group = '[O]bsidian' },
+    { '<leader>o_', hidden = true },
   }
 end
 return M

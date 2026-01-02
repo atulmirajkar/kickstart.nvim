@@ -22,6 +22,7 @@ Spec 'custom.plugins.copilot-lualine'
 Spec 'custom.plugins.copilot-chat'
 Spec 'custom.plugins.tmux-navigator'
 Spec 'custom.plugins.project'
+Spec 'custom.plugins.snacks'
 -- -- Git related plugins
 Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.lazygit'

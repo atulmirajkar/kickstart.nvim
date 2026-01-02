@@ -5,8 +5,8 @@ local M = {
 }
 M.config = function()
   local wk = require 'which-key'
-  wk.register {
-    ['<leader>e'] = { '<cmd>NvimTreeToggle<CR>', 'Explorer' },
+  wk.add {
+    { '<leader>e', '<cmd>NvimTreeToggle<CR>', desc = 'Explorer' },
   }
 
   local nvimtree = require 'nvim-tree'
@@ -61,6 +61,9 @@ M.config = function()
       width = 30,
       side = 'left',
     },
+    -- copied from https://github.com/ahmedkhalf/project.nvim
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
   }
 end
 return M
