@@ -1,21 +1,16 @@
 -- inspired from https://github.com/jellydn/lazy-nvim-ide/blob/main/lua/plugins/extras/copilot-chat-v2.lua
 local M = {
   'CopilotC-Nvim/CopilotChat.nvim',
-  branch = 'canary',
   dependencies = {
     { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
     { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper}
   },
+  build = 'make tiktoken',
   event = 'VeryLazy',
 }
 
 M.config = function()
   require('CopilotChat').setup {
-    -- Use unnamed register for the selection
-    selection = require('CopilotChat.select').unnamed,
-    question_header = '## User ',
-    answer_header = '## Copilot ',
-    error_header = '## Error ',
     prompts = {
       -- Code related prompts
       Explain = 'Please explain how the following code works.',
@@ -26,8 +21,6 @@ M.config = function()
       FixError = 'Please explain the error in the following text and provide a solution.',
       BetterNamings = 'Please provide better names for the following variables and functions.',
       Documentation = 'Please provide documentation for the following code.',
-      SwaggerApiDocs = 'Please provide documentation for the following API using Swagger.',
-      SwaggerJsDocs = 'Please write JSDoc for the following API using Swagger.',
       -- Text related prompts
       Summarize = 'Please summarize the following text.',
       Spelling = 'Please correct any grammar and spelling errors in the following text.',
@@ -47,73 +40,9 @@ M.config = function()
     },
     auto_follow_cursor = true, -- Don't follow the cursor after getting response
     show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
-    mappings = {
-      -- Use tab for completion
-      complete = {
-        insert = '',
-      },
-      -- Close the chat
-      close = {
-        normal = 'q',
-        insert = '<C-c>',
-      },
-      -- Reset the chat buffer
-      reset = {
-        normal = '<C-x>',
-        insert = '<C-x>',
-      },
-      -- Submit the prompt to Copilot
-      submit_prompt = {
-        normal = '<CR>',
-        insert = '<C-CR>',
-      },
-      -- Accept the diff
-      accept_diff = {
-        normal = '<C-y>',
-        insert = '<C-y>',
-      },
-      -- Yank the diff in the response to register
-      yank_diff = {
-        normal = 'gmy',
-      },
-      -- Show the diff
-      show_diff = {
-        normal = 'gmd',
-      },
-      -- Show the prompt
-      show_system_prompt = {
-        normal = 'gmp',
-      },
-      -- Show the user selection
-      show_user_selection = {
-        normal = 'gms',
-      },
-    },
   }
-
   local chat = require 'CopilotChat'
   local select = require 'CopilotChat.select'
-
-  -- Setup the CMP integration
-  require('CopilotChat.integrations.cmp').setup()
-
-  vim.api.nvim_create_user_command('CopilotChatVisual', function(args)
-    chat.ask(args.args, { selection = select.visual })
-  end, { nargs = '*', range = true })
-
-  -- Inline chat with Copilot
-  vim.api.nvim_create_user_command('CopilotChatInline', function(args)
-    chat.ask(args.args, {
-      selection = select.visual,
-      window = {
-        layout = 'float',
-        relative = 'cursor',
-        width = 1,
-        height = 0.4,
-        row = 1,
-      },
-    })
-  end, { nargs = '*', range = true })
 
   -- Restore CopilotChatBuffer
   vim.api.nvim_create_user_command('CopilotChatBuffer', function(args)
@@ -145,7 +74,6 @@ M.config = function()
       end
     end,
   })
-
   -- normal mode maps
   local nmap = function(keys, func, desc)
     vim.keymap.set('n', keys, func, { desc = desc })
@@ -156,21 +84,6 @@ M.config = function()
     vim.keymap.set('x', keys, func, { desc = desc })
   end
 
-  -- Show help actions with telescope
-  nmap('<leader>ah', function()
-    local actions = require 'CopilotChat.actions'
-    require('CopilotChat.integrations.telescope').pick(actions.help_actions())
-  end, 'CopilotChat - Help actions')
-  -- Show prompts actions with telescope
-  nmap('<leader>ap', function()
-    local actions = require 'CopilotChat.actions'
-    require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
-  end, 'CopilotChat - Prompt actions')
-  xmap(
-    '<leader>ap',
-    ":lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>",
-    'CopilotChat - Prompt actions'
-  )
   -- Code related commands
   nmap('<leader>ae', '<cmd>CopilotChatExplain<cr>', 'CopilotChat - Explain code')
   nmap('<leader>at', '<cmd>CopilotChatTests<cr>', 'CopilotChat - Generate tests')
@@ -178,8 +91,11 @@ M.config = function()
   nmap('<leader>aR', '<cmd>CopilotChatRefactor<cr>', 'CopilotChat - Refactor code')
   nmap('<leader>an', '<cmd>CopilotChatBetterNamings<cr>', 'CopilotChat - Better Naming')
   -- Chat with Copilot in visual mode
-  xmap('<leader>av', ':CopilotChatVisual', 'CopilotChat - Open in vertical split')
-  xmap('<leader>ax', ':CopilotChatInline<cr>', 'CopilotChat - Inline chat')
+  xmap('<leader>ae', '<cmd>CopilotChatExplain<cr>', 'CopilotChat - Explain code')
+  xmap('<leader>ar', '<cmd>CopilotChatReview<cr>', 'CopilotChat - Explain code')
+  xmap('<leader>aR', '<cmd>CopilotChatRefactor<cr>', 'CopilotChat - Refactor code')
+  xmap('<leader>an', '<cmd>CopilotChatBetterNamings<cr>', 'CopilotChat - Better Naming')
+  xmap('<leader>at', '<cmd>CopilotChatTests<cr>', 'CopilotChat - Generate tests')
   -- Custom input for CopilotChat
   nmap('<leader>ai', function()
     local input = vim.fn.input 'Ask Copilot: '
@@ -187,6 +103,19 @@ M.config = function()
       vim.cmd('CopilotChat ' .. input)
     end
   end, 'CopilotChat - Ask input')
+  -- Visual mode inline chat with Copilot
+  xmap('<leader>ai', function()
+    chat.open {
+      selection = select.visual,
+      window = {
+        layout = 'float',
+        relative = 'cursor',
+        width = 50,
+        height = 10,
+        row = 1,
+      },
+    }
+  end, 'CopilotChat - Inline chat')
   -- Generate commit message based on the git diff
   nmap('<leader>am', '<cmd>CopilotChatCommit<cr>', 'CopilotChat - Generate commit message for all changes')
   nmap('<leader>aM', '<cmd>CopilotChatCommitStaged<cr>', 'CopilotChat - Generate commit message for staged changes')
@@ -201,12 +130,11 @@ M.config = function()
   nmap('<leader>ad', '<cmd>CopilotChatDebugInfo<cr>', 'CopilotChat - Debug Info')
   -- Fix the issue with diagnostic
   nmap('<leader>af', '<cmd>CopilotChatFixDiagnostic<cr>', 'CopilotChat - Fix Diagnostic')
+  xmap('<leader>af', '<cmd>CopilotChatFixDiagnostic<cr>', 'CopilotChat - Fix Diagnostic')
   -- Clear buffer and chat history
   nmap('<leader>ax', '<cmd>CopilotChatReset<cr>', 'CopilotChat - Clear buffer and chat history')
   -- Toggle Copilot Chat Vsplit
-  nmap('<leader>av', '<cmd>CopilotChatToggle<cr>', 'CopilotChat - Toggle')
-  -- copilot chat integration
-  require('CopilotChat.integrations.cmp').setup()
+  nmap('<leader>av', '<cmd>CopilotChatToggle<cr>', 'CopilotChat - Vertical Toggle')
+  xmap('<leader>av', '<cmd>CopilotChatToggle<cr>', 'CopilotChat - Vertical Toggle')
 end
-
 return M

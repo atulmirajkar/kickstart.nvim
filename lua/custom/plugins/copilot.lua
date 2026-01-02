@@ -1,21 +1,16 @@
+-- https://stackoverflow.com/questions/76533194/neovim-github-copilot-notsignedin-but-authenticated
+-- use above solution to signout
 local M = {
   'zbirenbaum/copilot.lua',
-  branch = 'canary',
+  cmd = 'Copilot',
   event = 'InsertEnter',
 }
 
 M.config = function()
-  local opts = { noremap = true, silent = true, desc = '[T]oggle auto trigger Copilot' }
-  vim.api.nvim_set_keymap('n', '<leader>aT', ":lua require('copilot.suggestion').toggle_auto_trigger()<CR>", opts)
   require('copilot').setup {
-    filetypes = {
-      markdown = true,
-    },
-    -- suggestion = { enabled = false },
-    -- panel = { enabled = false },
     suggestion = {
       enabled = true,
-      auto_trigger = false,
+      auto_trigger = true,
       debounce = 75,
       keymap = {
         accept = '<M-y>',

@@ -35,6 +35,13 @@ keymap('n', '<C-k>', '<C-w>k', opts)
 keymap('n', '<C-l>', '<C-w>l', opts)
 keymap('n', '<C-6>', '<C-^>', opts) -- this does not work
 
+-- Better window navigation in visual mode
+keymap('x', '<C-h>', '<C-w>h', opts)
+keymap('x', '<C-j>', '<C-w>j', opts)
+keymap('x', '<C-k>', '<C-w>k', opts)
+keymap('x', '<C-l>', '<C-w>l', opts)
+keymap('x', '<C-6>', '<C-^>', opts) -- this does not work
+
 -- Resize with arrows
 keymap('n', '<C-Up>', ':resize -2<CR>', opts)
 keymap('n', '<C-Down>', ':resize +2<CR>', opts)

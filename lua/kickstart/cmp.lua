@@ -96,7 +96,7 @@ M.config = function()
       -- end, { 'i', 's' }),
     },
     sources = {
-      -- { name = 'copilot' },
+      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
@@ -114,8 +114,6 @@ M.config = function()
     ---@diagnostic disable-next-line: missing-fields
     sorting = {
       comparators = {
-        -- require("copilot_cmp.comparators").prioritize,
-
         -- Below is the default comparitor list and order for nvim-cmp
         cmp.config.compare.offset,
         -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
