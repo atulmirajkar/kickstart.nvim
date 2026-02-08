@@ -9,6 +9,9 @@ M.config = function()
     image = {
       enabled = true,
     },
+    input = {
+      enabled = true,
+    },
   }
 end
 return M

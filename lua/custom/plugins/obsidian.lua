@@ -43,7 +43,7 @@ M.config = function()
         opts = { buffer = true },
       },
     },
-    {
+    daily_notes = {
       -- Optional, if you keep daily notes in a separate directory.
       folder = 'Daily',
       -- Optional, if you want to change the date format for the ID of daily notes.

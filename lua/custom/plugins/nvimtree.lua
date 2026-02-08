@@ -3,6 +3,7 @@ local M = {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   event = 'VeryLazy',
 }
+
 M.config = function()
   local wk = require 'which-key'
   wk.add {
@@ -61,9 +62,13 @@ M.config = function()
       width = 30,
       side = 'left',
     },
+    --
     -- copied from https://github.com/ahmedkhalf/project.nvim
     sync_root_with_cwd = true,
     respect_buf_cwd = true,
+    filters = {
+      dotfiles = true,
+    },
   }
 end
 return M
