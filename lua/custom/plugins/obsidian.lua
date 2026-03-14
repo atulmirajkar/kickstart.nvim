@@ -21,7 +21,7 @@ M.config = function()
     workspaces = {
       {
         name = 'personal',
-        path = '/Users/atulmirajkar/Work/myobsidian',
+        path = '/Users/atulmirajkar/Work/markdown-notes/',
       },
     },
     follow_url_func = function(url)
