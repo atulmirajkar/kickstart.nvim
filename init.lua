@@ -15,18 +15,18 @@ require 'custom.core.autocmds'
 
 Spec 'custom.plugins.autopairs'
 Spec 'custom.plugins.markdown-preview'
+Spec 'custom.plugins.render-markdown'
 Spec 'custom.plugins.obsidian'
 Spec 'custom.plugins.nvimtree'
 Spec 'custom.plugins.copilot'
 Spec 'custom.plugins.copilot-lualine'
-Spec 'custom.plugins.copilot-chat'
+-- Spec 'custom.plugins.copilot-chat'
 Spec 'custom.plugins.tmux-navigator'
 Spec 'custom.plugins.project'
 Spec 'custom.plugins.snacks'
 -- -- Git related plugins
 Spec 'custom.plugins.fugitive'
 Spec 'custom.plugins.lazygit'
-Spec 'custom.plugins.render-markdown'
 
 --kickstart
 Spec 'kickstart.devicons'
@@ -43,6 +43,10 @@ Spec 'kickstart.conform'
 -- Spec("kickstart.debug") -- getting some error with dap
 Spec 'kickstart.vimsleuth'
 Spec 'kickstart.mini'
+
+--local develompment plugins
+Spec 'custom.plugins.dev.todo'
+Spec 'custom.plugins.dev.opencode'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then

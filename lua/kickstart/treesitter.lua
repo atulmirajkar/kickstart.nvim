@@ -4,12 +4,13 @@ local M = {
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
   build = ':TSUpdate',
+  branch = 'main',
 }
 
 M.config = function(_, opts)
   ---@diagnostic disable-next-line: missing-fields
-  require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'vim', 'vimdoc', 'go', 'latex', 'yaml' },
+  require('nvim-treesitter.config').setup {
+    ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'vim', 'vimdoc', 'go', 'latex', 'yaml', 'c_sharp' },
     -- Autoinstall languages that are not installed
     auto_install = true,
     highlight = {
@@ -24,6 +25,6 @@ M.config = function(_, opts)
 
   require('nvim-treesitter.install').prefer_git = true
   ---@diagnostic disable-next-line: missing-fields
-  require('nvim-treesitter.configs').setup(opts)
+  require('nvim-treesitter.config').setup(opts)
 end
 return M

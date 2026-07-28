@@ -40,6 +40,7 @@ local options = {
   -- from kickstart
   -- Enable break indent
   breakindent = true,
+  autoread = true, -- check if file has changed when it is focused
 }
 
 for k, v in pairs(options) do

@@ -9,6 +9,9 @@ M.config = function()
     bullet = {
       right_pad = 1,
     },
+    checkbox = {
+      right_pad = 5,
+    },
   }
 end
 return M
